@@ -1,0 +1,11 @@
+# cat=Pardot; type=string; label=Account ID: Your global Pardot account ID (Account User -> Settings -> Account)
+account =
+
+# cat=Pardot; type=string; label=Email: Your Pardot login email address
+email =
+
+# cat=Pardot; type=string; label=Account ID: Your Pardot user key (Account User -> Settings -> My Profile)
+user_key =
+
+# cat=Pardot; type=user[EXT:pardot/Classes/Utility/ExtensionManagerConfigurationUtility.php:Belsignum\Pardot\Utility\ExtensionManagerConfigurationUtility->passwordField]; label=Account ID: Your Pardot password
+password =

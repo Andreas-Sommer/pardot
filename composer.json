@@ -1,0 +1,28 @@
+{
+  "name": "pardot",
+  "type": "typo3-cms-extension",
+  "description": "Pardot Api Service",
+  "authors": [
+    {
+      "name": "Andreas Sommer",
+      "role": "Developer"
+    }
+  ],
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "typo3/cms-core": ">=8.7.0 <10.0.0",
+    "cyber-duck/pardot-api": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Belsignum\\Pardot\\": "Classes/"
+    },
+    "classmap": [
+      "vendor/cyber-duck/pardot-api/src/"
+    ]
+  },
+  "replace": {
+    "belsignum/pardot": "self.version",
+    "typo3-ter/pardot": "self.version"
+  }
+}
