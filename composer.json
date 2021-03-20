@@ -16,10 +16,7 @@
   "autoload": {
     "psr-4": {
       "Belsignum\\Pardot\\": "Classes/"
-    },
-    "classmap": [
-      "vendor/cyber-duck/pardot-api/src/"
-    ]
+    }
   },
   "replace": {
     "belsignum/pardot": "self.version",
