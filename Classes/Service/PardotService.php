@@ -8,9 +8,9 @@ namespace Belsignum\Pardot\Service;
  */
 
 use CyberDuck\Pardot\PardotApi;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
-use TYPO3\CMS\Extensionmanager\Utility\ConfigurationUtility;
 
 class PardotService
 {
@@ -68,15 +68,8 @@ class PardotService
 	 */
 	public function getExtConfSettings()
 	{
-		$configurationUtility = $this->objectManager->get(ConfigurationUtility::class);
-		$extensionConfiguration = $configurationUtility->getCurrentConfiguration(self::EXTKEY);
-		if(\is_array($extensionConfiguration))
-		{
-			foreach ($extensionConfiguration as $key => $config)
-			{
-				$this->settings[$key] = $config['value'];
-			}
-		}
+		$this->settings = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+			->get('pardot');
 	}
 
 	/**

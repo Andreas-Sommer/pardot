@@ -4,8 +4,8 @@ account =
 # cat=Pardot; type=string; label=Email: Your Pardot login email address
 email =
 
-# cat=Pardot; type=string; label=Account ID: Your Pardot user key (Account User -> Settings -> My Profile)
+# cat=Pardot; type=string; label=Account key: Your Pardot user key (Account User -> Settings -> My Profile)
 user_key =
 
-# cat=Pardot; type=user[EXT:pardot/Classes/Utility/ExtensionManagerConfigurationUtility.php:Belsignum\Pardot\Utility\ExtensionManagerConfigurationUtility->passwordField]; label=Account ID: Your Pardot password
+# cat=Pardot; type=text; label=Account Password: Your Pardot password
 password =
