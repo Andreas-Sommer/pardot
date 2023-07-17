@@ -15,14 +15,10 @@ $EM_CONF[$_EXTKEY] = array(
 	'author' => 'Andreas Sommer',
 	'author_email' => 'sommer@belsignum.com',
 	'state' => 'beta',
-	'internal' => '',
-	'uploadfolder' => '0',
-	'createDirs' => '',
-	'clearCacheOnLoad' => 0,
 	'version' => '1.0.0',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '8.7.0-9.5.99',
+			'typo3' => '8.7.0-10.4.99',
 		),
 		'conflicts' => array(
 		),

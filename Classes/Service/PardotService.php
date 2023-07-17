@@ -10,7 +10,6 @@ namespace Belsignum\Pardot\Service;
 use CyberDuck\Pardot\PardotApi;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 class PardotService
 {
@@ -19,11 +18,6 @@ class PardotService
 	 * Extension key
 	 */
 	public const EXTKEY = 'pardot';
-
-	/**
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 */
-	protected $objectManager;
 
 	/**
 	 * @var PardotApi
@@ -38,20 +32,10 @@ class PardotService
 	protected $settings;
 
 	/**
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager
-	 * @return void
-	 */
-	public function injectObjectManager(ObjectManager $objectManager)
-	{
-		$this->objectManager = $objectManager;
-	}
-
-	/**
 	 * initialize API
 	 */
 	public function __construct()
 	{
-		$this->injectObjectManager(new ObjectManager());
 		$this->getExtConfSettings();
 
 		$this->pardot = GeneralUtility::makeInstance(
