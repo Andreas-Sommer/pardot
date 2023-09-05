@@ -1,11 +1,20 @@
 # cat=Pardot; type=string; label=Account ID: Your global Pardot account ID (Account User -> Settings -> Account)
 account =
 
-# cat=Pardot; type=string; label=Email: Your Pardot login email address
-email =
+# cat=Pardot; type=string; label=Client Id
+clientId =
 
-# cat=Pardot; type=string; label=Account key: Your Pardot user key (Account User -> Settings -> My Profile)
-user_key =
+# cat=Pardot; type=string; label=Client Secret
+clientSecret =
 
-# cat=Pardot; type=text; label=Account Password: Your Pardot password
-password =
+# cat=Pardot; type=string; label=Redirect Uri
+redirectUri =
+
+# cat=Pardot; type=text; label=Business Unit Id
+businessUnitId =
+
+# cat=Pardot; type=text; label=Access Token Storage path relative to config folder
+accessTokenStorage = /pardotApi/config.json
+
+# cat=Development; type=text; label=Static Visitor Id (Attention! Use this only in Development Context to statically overwrite the cookie visitor Id)
+staticVisitorId =

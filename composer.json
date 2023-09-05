@@ -11,7 +11,7 @@
   "license": "GPL-2.0-or-later",
   "require": {
     "typo3/cms-core": "^v9.5.31 || ^v10.4.37",
-    "cyber-duck/pardot-api": "dev-master"
+    "cyber-duck/pardot-api": "*"
   },
   "autoload": {
     "psr-4": {
