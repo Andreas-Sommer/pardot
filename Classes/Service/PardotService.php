@@ -47,6 +47,8 @@ class PardotService
             $this->settings['businessUnitId'],
             $this->settings['accessTokenStorage']
         );
+        $debug = (bool) $this->settings['debug'];
+        $this->pardot->setDebug($debug);
     }
 
     /**
