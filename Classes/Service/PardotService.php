@@ -14,16 +14,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class PardotService
 {
-
     /**
      * Extension key
      */
     public const EXTKEY = 'pardot';
 
     /**
-     * @var PardotApi
+     * @var PardotApi|null
      */
-    public PardotApi $pardot;
+    public ?PardotApi $pardot;
 
     /**
      * Extension Settings
@@ -38,6 +37,12 @@ class PardotService
     public function __construct()
     {
         $this->getExtConfSettings();
+
+        if($this->validateOAuthConfig() === false)
+        {
+            $this->pardot = null;
+            return;
+        }
 
         $this->pardot = GeneralUtility::makeInstance(
             PardotApi::class,
@@ -74,5 +79,20 @@ class PardotService
             return $this->settings['staticVisitorId'];
         }
         return $_COOKIE['visitor_id' . $this->settings['account']];
+    }
+
+    protected function validateOAuthConfig(): bool
+    {
+        if(file_exists($this->settings['accessTokenStorage']))
+        {
+            $configJson = file_get_contents($this->settings['accessTokenStorage']);
+            if (version_compare(phpversion(), '8.3.0', '<'))
+            {
+                json_decode($configJson);
+                return json_last_error() === JSON_ERROR_NONE;
+            }
+            return json_validate($configJson);
+        }
+        return false;
     }
 }
