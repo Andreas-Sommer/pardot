@@ -10,7 +10,7 @@
   ],
   "license": "GPL-2.0-or-later",
   "require": {
-    "typo3/cms-core": "^v9.5.31 || ^v10.4.37",
+    "typo3/cms-core": "^v12.4.31",
     "cyber-duck/pardot-api": "^3.0.0 || dev-master"
   },
   "autoload": {

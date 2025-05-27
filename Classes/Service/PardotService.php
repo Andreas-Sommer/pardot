@@ -38,7 +38,7 @@ class PardotService
     {
         $this->getExtConfSettings();
 
-        if($this->validateOAuthConfig() === false)
+        if ($this->validateOAuthConfig() === false)
         {
             $this->pardot = null;
             return;
@@ -83,7 +83,7 @@ class PardotService
 
     protected function validateOAuthConfig(): bool
     {
-        if(file_exists($this->settings['accessTokenStorage']))
+        if (file_exists($this->settings['accessTokenStorage']))
         {
             $configJson = file_get_contents($this->settings['accessTokenStorage']);
             if (version_compare(phpversion(), '8.3.0', '<'))
