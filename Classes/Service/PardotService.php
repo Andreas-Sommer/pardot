@@ -1,5 +1,6 @@
 <?php
 namespace Belsignum\Pardot\Service;
+
 /**
  * Created by PhpStorm.
  * User: Andreas Sommer
@@ -38,8 +39,7 @@ class PardotService
     {
         $this->getExtConfSettings();
 
-        if ($this->validateOAuthConfig() === false)
-        {
+        if ($this->validateOAuthConfig() === false) {
             $this->pardot = null;
             return;
         }
@@ -63,26 +63,21 @@ class PardotService
     public function getExtConfSettings()
     {
         $extensionConfiguration = [];
-        try
-        {
+        try {
             $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
                 ->get(self::EXTKEY);
-        }
-        catch (\Throwable)
-        {
+        } catch (\Throwable) {
             // Fallback below covers runtime overrides from additional.php.
         }
 
         $runtimeConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][self::EXTKEY] ?? [];
-        if (!is_array($runtimeConfiguration))
-        {
+        if (!is_array($runtimeConfiguration)) {
             $runtimeConfiguration = [];
         }
 
         $this->settings = array_replace($extensionConfiguration, $runtimeConfiguration);
 
-        if (empty($this->settings['accessTokenStorage']))
-        {
+        if (empty($this->settings['accessTokenStorage'])) {
             $this->settings['accessTokenStorage'] = '/pardotApi/config.json';
         }
 
@@ -97,8 +92,7 @@ class PardotService
      */
     public function getVisitorId()
     {
-        if ($this->settings['staticVisitorId'])
-        {
+        if ($this->settings['staticVisitorId']) {
             return $this->settings['staticVisitorId'];
         }
 
@@ -108,11 +102,9 @@ class PardotService
 
     protected function validateOAuthConfig(): bool
     {
-        if (file_exists($this->settings['accessTokenStorage']))
-        {
+        if (file_exists($this->settings['accessTokenStorage'])) {
             $configJson = file_get_contents($this->settings['accessTokenStorage']);
-            if (version_compare(phpversion(), '8.3.0', '<'))
-            {
+            if (version_compare(phpversion(), '8.3.0', '<')) {
                 json_decode($configJson);
                 return json_last_error() === JSON_ERROR_NONE;
             }
@@ -123,18 +115,15 @@ class PardotService
 
     protected function resolveAccessTokenStoragePath(string $path): string
     {
-        if (str_starts_with($path, '/pardotApi/'))
-        {
+        if (str_starts_with($path, '/pardotApi/')) {
             return Environment::getProjectPath() . '/config' . $path;
         }
 
-        if (str_starts_with($path, 'pardotApi/'))
-        {
+        if (str_starts_with($path, 'pardotApi/')) {
             return Environment::getProjectPath() . '/config/' . $path;
         }
 
-        if (str_starts_with($path, '/'))
-        {
+        if (str_starts_with($path, '/')) {
             return Environment::getConfigPath() . $path;
         }
 
