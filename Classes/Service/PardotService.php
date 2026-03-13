@@ -62,10 +62,33 @@ class PardotService
      */
     public function getExtConfSettings()
     {
-        $this->settings = GeneralUtility::makeInstance(ExtensionConfiguration::class)
-            ->get(self::EXTKEY);
+        $extensionConfiguration = [];
+        try
+        {
+            $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class)
+                ->get(self::EXTKEY);
+        }
+        catch (\Throwable)
+        {
+            // Fallback below covers runtime overrides from additional.php.
+        }
 
-        $this->settings['accessTokenStorage'] = Environment::getConfigPath() . $this->settings['accessTokenStorage'];
+        $runtimeConfiguration = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][self::EXTKEY] ?? [];
+        if (!is_array($runtimeConfiguration))
+        {
+            $runtimeConfiguration = [];
+        }
+
+        $this->settings = array_replace($extensionConfiguration, $runtimeConfiguration);
+
+        if (empty($this->settings['accessTokenStorage']))
+        {
+            $this->settings['accessTokenStorage'] = '/pardotApi/config.json';
+        }
+
+        $this->settings['accessTokenStorage'] = $this->resolveAccessTokenStoragePath(
+            (string)$this->settings['accessTokenStorage']
+        );
     }
 
     /**
@@ -78,7 +101,9 @@ class PardotService
         {
             return $this->settings['staticVisitorId'];
         }
-        return $_COOKIE['visitor_id' . $this->settings['account']];
+
+        $cookieName = 'visitor_id' . ($this->settings['account'] ?? '');
+        return $_COOKIE[$cookieName] ?? null;
     }
 
     protected function validateOAuthConfig(): bool
@@ -94,5 +119,25 @@ class PardotService
             return json_validate($configJson);
         }
         return false;
+    }
+
+    protected function resolveAccessTokenStoragePath(string $path): string
+    {
+        if (str_starts_with($path, '/pardotApi/'))
+        {
+            return Environment::getProjectPath() . '/config' . $path;
+        }
+
+        if (str_starts_with($path, 'pardotApi/'))
+        {
+            return Environment::getProjectPath() . '/config/' . $path;
+        }
+
+        if (str_starts_with($path, '/'))
+        {
+            return Environment::getConfigPath() . $path;
+        }
+
+        return Environment::getConfigPath() . '/' . ltrim($path, '/');
     }
 }
